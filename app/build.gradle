@@ -1,0 +1,61 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+def localProps = new Properties()
+def localPropsFile = rootProject.file('local.properties')
+if (localPropsFile.exists()) {
+    localPropsFile.withReader('UTF-8') { reader -> localProps.load(reader) }
+}
+
+android {
+    namespace 'com.uplers.watest'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.uplers.watest'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", "WA_AWS_KEY",        "\"${localProps['WA_CALLS_AWS_KEY'] ?: System.getenv('WA_CALLS_AWS_KEY') ?: ''}\""
+        buildConfigField "String", "WA_AWS_SECRET",     "\"${localProps['WA_CALLS_AWS_SECRET'] ?: System.getenv('WA_CALLS_AWS_SECRET') ?: ''}\""
+        buildConfigField "String", "WA_AWS_REGION",     "\"${localProps['WA_CALLS_AWS_REGION'] ?: System.getenv('WA_CALLS_AWS_REGION') ?: 'ap-south-1'}\""
+        buildConfigField "String", "WA_S3_BUCKET",      "\"${localProps['WA_CALLS_S3_BUCKET'] ?: System.getenv('WA_CALLS_S3_BUCKET') ?: 'atsstaging'}\""
+        buildConfigField "String", "WA_ELEVENLABS_KEY", "\"${localProps['WA_CALLS_ELEVENLABS_KEY'] ?: System.getenv('WA_CALLS_ELEVENLABS_KEY') ?: ''}\""
+    }
+
+    buildFeatures {
+        buildConfig true
+        viewBinding true
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.work:work-runtime-ktx:2.9.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+}

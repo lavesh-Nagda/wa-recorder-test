@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#FAFAFA">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="WA Call Recorder Test"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#212121"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:id="@+id/tvListenerStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"
+        android:text="Notification Listener: checking…"/>
+
+    <Button
+        android:id="@+id/btnNotifAccess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Open Notification Access Settings"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnBatteryOpt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Open Battery Optimization Settings"
+        android:layout_marginBottom="24dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Instructions:"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="#555555"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginBottom="24dp"
+        android:text="1. Grant Notification Access (button above)\n2. On MIUI/HyperOS: Settings → Apps → Manage Apps → WA Recorder Test → Autostart → ON\n3. On MIUI/HyperOS: Battery Saver → No restrictions for this app\n4. Make or receive a WhatsApp call\n5. Check status below after the call ends"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tvLastRecording"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="#333333"
+        android:lineSpacingExtra="4dp"
+        android:text="Last recording:\nNone yet"/>
+
+</LinearLayout>

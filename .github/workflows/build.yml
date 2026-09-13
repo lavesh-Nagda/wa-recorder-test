@@ -1,0 +1,50 @@
+name: Build WA Recorder Test APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Write local.properties
+        run: |
+          cat > local.properties << 'EOF'
+          sdk.dir=/home/runner/Android/Sdk
+          WA_CALLS_AWS_KEY=${{ secrets.WA_CALLS_AWS_KEY }}
+          WA_CALLS_AWS_SECRET=${{ secrets.WA_CALLS_AWS_SECRET }}
+          WA_CALLS_AWS_REGION=${{ secrets.WA_CALLS_AWS_REGION }}
+          WA_CALLS_S3_BUCKET=${{ secrets.WA_CALLS_S3_BUCKET }}
+          WA_CALLS_ELEVENLABS_KEY=${{ secrets.WA_CALLS_ELEVENLABS_KEY }}
+          EOF
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('**/*.gradle', 'gradle/wrapper/gradle-wrapper.properties') }}
+
+      - name: Build Debug APK
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: wa-recorder-test-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 7
